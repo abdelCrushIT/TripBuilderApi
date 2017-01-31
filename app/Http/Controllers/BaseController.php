@@ -50,7 +50,7 @@ abstract class BaseController extends Controller
     /**
      * return all ressources 
      */
-    public function index() {
+    public function getAll() {
     	$data = $this->repository->all();
         return response()->json(['data' => $data], 200);
     }
