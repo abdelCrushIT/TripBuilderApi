@@ -9,6 +9,11 @@
 
 namespace App\Repositories;
 
+/**
+ * RepositoryInterface
+ * RepositoryInterface Interface
+ */
+
 interface RepositoryInterface {
 
 	public function all($columns = array('*'));

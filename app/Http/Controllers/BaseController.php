@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * BaseController.php
+ * author     Abdel <abdelhalim.drioueche@gmail.com>
+ * copyright  2017 Abdel
+ * see        https://github.com/abdelCrushIT/TripBuilderApi
+ */
+
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -23,7 +31,9 @@ abstract class BaseController extends Controller
     }
     
     /**
-     * @return Repository
+     * Makes a repository.
+     *
+     * @return     Repository  
      */
     public function makeRepository() {
         $repository = $this->app->make($this->repository());
@@ -37,32 +47,23 @@ abstract class BaseController extends Controller
      */
     abstract function repository();
 
+    /**
+     * return all ressources 
+     */
     public function index() {
     	$data = $this->repository->all();
-    	echo json_encode($data);
+        return response()->json(['data' => $data], 200);
     }
 
+    /**
+     * Searches for the first match.
+     *
+     * @param      integer  $id     The ressource identifier
+     *
+     * @return     Json response  
+     */
     public function find($id) {
         $data = $this->repository->find($id);
-        echo json_encode($data);
-    }
-
-    public function create(Request $request) {
-    	$data = $this->prepareDataFromRequest($request);
-        $this->repository->create($data);
-    	return redirect('/');
-    }
-
-    public function edit(Request $request) {
-    	$data = $this->prepareDataFromRequest($request);
-    	$this->repository->update($data, $request->input('id'));
-    	return redirect('/');
-    }
-  
-
-    //destroy a game
-    public function delete(Request $request) {
-    	$this->repository->delete($request->input('id'));
-    	return redirect('/');
+        return response()->json(['data' => $data], 200);
     }
 }
