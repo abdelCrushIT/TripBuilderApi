@@ -12,13 +12,16 @@
 1. **GET /airports**  
   
   [ get all available airports ]  
-2. GET /trips/{tripId}  
+2. GET /trips
   
-  [ get trip info with all related flights ]
-3. PUT /trips/{tripId}/flights/{departAirportCode-destAirportCode}  
+  [ get all trips info ]
+3. GET /trips/{tripId}  
+  
+  [ get specific trip info with all related flights ]
+4. PUT /trips/{tripId}/flights/{departAirportCode-destAirportCode}  
   
   [ Add new flight to a trip ex: /trips/2/flights/CDG-DBX] departAirportCode and destAirportCode are airport codes.
-4. DELETE /trips/{tripId}/flights/{departAirportCode-destAirportCode}  
+5. DELETE /trips/{tripId}/flights/{departAirportCode-destAirportCode}  
 
   [ Delete a flight to a trip ex: /trips/2/flights/CDG-DBX] departAirportCode and destAirportCode are airport codes.
    
