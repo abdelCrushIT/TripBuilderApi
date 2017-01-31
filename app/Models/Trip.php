@@ -21,6 +21,7 @@ use App\Models\Flight;
 class Trip extends Model
 {
 	protected $fillable = ['reservation_code', 'created_at','updated_at'];
+	protected $guarded = ['id'];
 
 	public function flights() {
 		return $this->belongsToMany('App\Models\Flight');

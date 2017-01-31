@@ -24,8 +24,8 @@ abstract class Repository implements RepositoryInterface {
     /**
      * @param App $app
      */
-    public function __construct(App $app) {
-        $this->app = $app;
+    public function __construct() {
+        //$this->app = $app;
         $this->makeModel();
     }
 
@@ -102,7 +102,7 @@ abstract class Repository implements RepositoryInterface {
      * @throws RepositoryException
      */
     public function makeModel() {
-        $model = $this->app->make($this->model());
+        $model = app()->make($this->model());
         return $this->model = $model;
     }
 }

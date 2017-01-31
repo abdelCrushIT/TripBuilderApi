@@ -42,6 +42,9 @@ class TripController extends BaseController
 	 */
 	public function find($tripId) {
 		$trip = $this->repository->find($tripId);
+		if(!$trip) {
+			return response()->json(['message' => 'Trip not found'], 404);
+		}
 		$flights = $trip->flights()->get();
 		return response()->json([ 'trip' => $trip, 'flights' => $flights ], 200);
 		return array('trip'=> $trip, 'flights' => $flights);
