@@ -11,6 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/airports', 'AirportController@index');
+Route::get('/trips/{tripId}', 'TripController@find');
+Route::put('/trips/{tripId}/flights/{departCode}-{destCode}', 'TripController@addFlight');
+Route::delete('/trips/{tripId}/flights/{departCode}-{destCode}', 'TripController@deleteFlight');
