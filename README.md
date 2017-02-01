@@ -6,6 +6,10 @@
 4. vagrant up
 5. vagrant ssh
 6. composer install
+7. run php artisan migrate
+8. run php artisan db:seed --class=AirportsTableSeeder
+9. run php artisan db:seed --class=FlightsTableSeeder
+10. run php artisan db:seed --class=TripsTableSeeder
 
 ## API routes:
 
