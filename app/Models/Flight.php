@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Flight extends Model
 {
-	protected $fillable = ['code', 'airline', 'depart_airport_id', 'dest_airport_id', 'created_at','updated_at'];
+	protected $fillable = ['code', 'airline', 'depart_airport_id', 'depart_airport', 'dest_airport_id', 'dest_airport', 'created_at','updated_at'];
 
 	public function departAirport() {
 		return $this->belongsTo('App\Models\Airport', 'depart_airport_id');
@@ -33,5 +33,10 @@ class Flight extends Model
 
 	public function trips() {
 		return $this->belongsToMany('App\Models\Flight');
+	}
+
+	public function setAirports($departAirport, $destAirport) {
+		$this->depart_airport = $departAirport;
+		$this->dest_airport = $destAirport;
 	}
 }

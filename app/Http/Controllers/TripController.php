@@ -46,6 +46,13 @@ class TripController extends BaseController
 			return response()->json(['message' => 'Trip not found'], 404);
 		}
 		$flights = $trip->flights()->get();
+
+		//set depart and dest airport in the flight Model
+		foreach($flights as $flight) {
+			$departAirport = $this->airportRepository->find($flight->depart_airport_id);
+			$destAirport = $this->airportRepository->find($flight->dest_airport_id);
+			$flight->setAirports($departAirport, $destAirport);
+		}
 		return response()->json([ 'trip' => $trip, 'flights' => $flights ], 200);
 		return array('trip'=> $trip, 'flights' => $flights);
 	}
@@ -59,6 +66,9 @@ class TripController extends BaseController
 	 */
 	public function addFlight($tripId, $departCode, $destCode) {
 		$flight = $this->checkFlight($departCode, $destCode);
+		if(!$flight) {
+			return response()->json(['message' => 'Flight not found'], 404);
+		}
 		$trip = $this->repository->find($tripId);
 		$this->repository->addFlight($trip, $flight);
 		return response()->json(['message' => 'Flight added to the Trip'], 200);
@@ -90,9 +100,6 @@ class TripController extends BaseController
 		$departAirport = $this->airportRepository->findBy('code', $departCode, ['id']);
 		$destAirport = $this->airportRepository->findBy('code', $destCode, ['id']);
 		$flight = $this->flightRepository->findByAirports($departAirport, $destAirport);
-		if(!$flight) {
-			return response()->json(['message' => 'Flight not found'], 404);
-		}
 		return $flight;
 	}
 }
