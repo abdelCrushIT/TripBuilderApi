@@ -31,4 +31,5 @@
   
   
   # Important Note:
-  Please not that the available flights are in the flights database table. when using the API or the website in order to adde a flight to a trip, please choose the available combinaison for depature airport and arrival airport (look to flights table and get airports combinaison from airports table). ADDING NEW FLIGHT WAS OUT OF THE SCOPE OF THIS WORK AND COULD EASILY BE ADDED IF NEEDED. 
+  The business logic adopted in this project which reflects the reality is that a flight is a direct connection between two cities and that not any combinaison of deparature airport and arrival departure is available.  
+  Please not that the available flights are in the flights database table. when using the API or the website in order to adde a flight to a trip, please choose the available combinaison for depature airport and arrival airport (look to flights table and get airports combinaison from airports table). ADDING NEW FLIGHT WAS OUT OF THE SCOPE OF THIS WORK AND COULD EASILY BE ADDED IF NEEDED.  
