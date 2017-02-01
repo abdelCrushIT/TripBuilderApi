@@ -43,7 +43,7 @@ class TripController extends BaseController
 	public function find($tripId) {
 		$trip = $this->repository->find($tripId);
 		if(!$trip) {
-			return response()->json(['message' => 'Trip not found'], 404);
+			return response()->json(['message' => 'Trip not found', 'status_code' => '404'], 404);
 		}
 		$flights = $trip->flights()->get();
 
@@ -65,13 +65,19 @@ class TripController extends BaseController
 	 * @param      string  $destCode    The destination code
 	 */
 	public function addFlight($tripId, $departCode, $destCode) {
-		$flight = $this->checkFlight($departCode, $destCode);
+		$airports = $this->getAirports($departCode, $destCode);
+
+		if(!$airports['departAirport'] || !$airports['destAirport']) {
+			return response()->json(['message' => 'Departure airport or Arrival airport not found', 'status_code' => '404'], 404);
+		}
+
+		$flight = $this->getFlight($airports['departAirport'], $airports['destAirport']);
 		if(!$flight) {
-			return response()->json(['message' => 'Flight not found'], 404);
+			return response()->json(['message' => 'Flight not found', 'status_code' => '404'], 404);
 		}
 		$trip = $this->repository->find($tripId);
 		$this->repository->addFlight($trip, $flight);
-		return response()->json(['message' => 'Flight added to the Trip'], 200);
+		return response()->json(['message' => 'Flight added to the Trip', 'status_code' => '200'], 200);
 	}
 
 	/**
@@ -82,24 +88,35 @@ class TripController extends BaseController
 	 * @param      string  $destCode    The destination code
 	 */
 	public function deleteFlight($tripId, $departCode, $destCode) {
-		$flight = $this->checkFlight($departCode, $destCode);
+		$airports = $this->getAirports($departCode, $destCode);
+
+		if(!$airports['departAirport'] || !$airports['destAirport']) {
+			return response()->json(['message' => 'Departure airport or Arrival airport not found', 'status_code' => '404'], 404);
+		}
+
+		$flight = $this->getFlight($airports['departAirport'], $airports['destAirport']);
 		$trip = $this->repository->find($tripId);
 		$this->repository->deleteFlight($trip, $flight);
-		return response()->json(['message' => 'Flight deleted from the Trip'], 200);
+		return response()->json(['message' => 'Flight deleted from the Trip', 'status_code' => '200'], 200);
 	}
 
 	/**
-	 * check if a flight exists
+	 * get flight 
 	 *
 	 * @param      string  $departCode  The depart code
 	 * @param      string  $destCode    The destination code			
 	 *
 	 * @return     Json response	  
 	 */
-	public function checkFlight($departCode, $destCode) {
-		$departAirport = $this->airportRepository->findBy('code', $departCode, ['id']);
-		$destAirport = $this->airportRepository->findBy('code', $destCode, ['id']);
+	public function getFlight($departAirport, $destAirport) {
 		$flight = $this->flightRepository->findByAirports($departAirport, $destAirport);
 		return $flight;
+	}
+
+	public function getAirports($departCode, $destCode) {
+		$departAirport = $this->airportRepository->findBy('code', $departCode, ['id']);
+		$destAirport = $this->airportRepository->findBy('code', $destCode, ['id']);
+		$airports = ['departAirport' => $departAirport, 'destAirport' => $destAirport];
+		return $airports;
 	}
 }
