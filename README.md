@@ -1,7 +1,7 @@
 # TripBuilderApi
 ## Setup 
 1. git clone 
-2. in configs.yaml maps yourWorkDirectory/TripBuilderApi/public to tripBuilderApi
+2. in configs.yaml (Homestead.yaml if your are using Homestead)  maps yourWorkDirectory/TripBuilderApi/public to tripBuilderApi
 3. in your hosts file maps 192.168.10.10 tripBuilderApi (you can change 192.168.10.10 by your IP address)
 4. vagrant up
 5. vagrant ssh
