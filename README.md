@@ -28,3 +28,7 @@
 5. DELETE /trips/{tripId}/flights/{departAirportCode-destAirportCode}  
 
   [ Delete a flight to a trip ex: /trips/2/flights/CDG-DBX] departAirportCode and destAirportCode are airport codes.
+  
+  
+  # Important Note:
+  Please not that the available flights are in the flights database table. when using the API or the website in order to adde a flight to a trip, please choose the available combinaison for depature airport and arrival airport (look to flights table and get airports combinaison from airports table). ADDING NEW FLIGHT WAS OUT OF THE SCOPE OF THIS WORK AND COULD EASILY BE ADDED IF NEEDED. 
